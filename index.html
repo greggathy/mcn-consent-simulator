@@ -1683,7 +1683,7 @@
     }
   }
 
-  /* Where MAID goes */
+  /* Where GUID goes */
   .maid-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2330,19 +2330,528 @@
       margin-left: 0;
     }
   }
+  /* Workspace layout: on a desktop-sized screen the picker, narration, panels and send attempt
+     all fit in one viewport. Narrow or short screens keep the stacked layout above. */
+  @media (min-width: 1200px) and (min-height: 620px) {
+    .sim-shell {
+      display: grid;
+      grid-template-columns: minmax(300px, 25%) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr);
+      grid-template-areas: "rail stage";
+      gap: 10px 16px;
+      height: calc(100vh - 20px);
+      height: calc(100dvh - 20px);
+      max-height: 1080px;
+      scroll-margin-top: 10px;
+      /* Break out of the 1320px reading column to use the full screen width */
+      --shell-w: min(calc(100vw - 48px), 1720px);
+      width: var(--shell-w);
+      margin-left: calc(50% - var(--shell-w) / 2);
+    }
+    /* Picker: number chips grouped by outcome; the full title is in the now-bar and the tooltip */
+    .sim-shell .picker {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 14px;
+    }
+    .sim-shell .pgroup {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+    }
+    .sim-shell .pg-label {
+      padding-top: 0;
+      white-space: nowrap;
+    }
+    .sim-shell .pg-count {
+      display: none;
+    }
+    .sim-shell .pg-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .sim-shell .pick {
+      position: relative;
+      padding: 3px 7px;
+      font-size: 12.5px;
+    }
+    .sim-shell .pick-n {
+      min-width: 1.2em;
+      text-align: center;
+      font-size: 12.5px;
+    }
+    .sim-shell .pick-t {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .sim-shell .pick-plan {
+      display: none;
+    }
+    .sim-rail,
+    .sim-stage {
+      min-height: 0;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    .sim-rail {
+      grid-area: rail;
+      padding-right: 2px;
+    }
+    .sim-stage {
+      grid-area: stage;
+    }
+    .sim-shell .nowbar {
+      position: static;
+      padding: 10px 12px;
+    }
+    .sim-shell .now {
+      flex-basis: 100%;
+    }
+    .sim-shell .caption {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 12px 14px;
+    }
+    .sim-shell .cap-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .sim-shell .cap-text {
+      font-size: var(--fs-md);
+    }
+    .sim-shell .callout {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 8px 12px;
+    }
+    .sim-shell .key-cast {
+      margin-left: 0;
+    }
+    /* Stage: A across the top; B with the send attempt under it beside the taller C */
+    .sim-stage {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+      grid-template-areas:
+        "key key"
+        "a a"
+        "b c"
+        "send c";
+      grid-template-rows: auto auto auto 1fr;
+      align-items: start;
+    }
+    .sim-shell .key {
+      grid-area: key;
+    }
+    .sim-shell .panels {
+      display: contents;
+    }
+    .sim-shell .panel-a {
+      grid-area: a;
+    }
+    .sim-shell .panel-a .pbody {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr) minmax(
+          min-content,
+          1.2fr
+        );
+    }
+    .sim-shell .panel-b {
+      grid-area: b;
+    }
+    .sim-shell .panel-c {
+      grid-area: c;
+    }
+    .sim-shell .send {
+      grid-area: send;
+    }
+    .sim-shell .pipe {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 8px;
+      gap: 6px;
+    }
+    .sim-shell .pstep {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: baseline;
+      gap: 2px 10px;
+      padding: 6px 10px;
+    }
+    .sim-shell .pv {
+      grid-column: 2 / -1;
+      padding-top: 0;
+    }
+    /* Denser type and spacing inside the workspace only */
+    .sim-shell {
+      --fs-sm: 12px;
+      --fs-md: 13.5px;
+      --fs-lg: 15px;
+      line-height: 1.4;
+    }
+    .sim-shell .pgroup .pg-label {
+      font-size: 12px;
+    }
+    .sim-shell .now {
+      gap: 2px;
+    }
+    .sim-shell .now-result {
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+    .sim-shell .stepper .bbtn {
+      padding: 4px 10px;
+    }
+    .sim-shell .cap-ev {
+      gap: 4px 12px;
+      padding-top: 6px;
+    }
+    .sim-shell .panel-head {
+      padding: 6px 10px;
+      gap: 8px;
+    }
+    .sim-shell .pletter {
+      width: 22px;
+      height: 22px;
+      font-size: 13px;
+    }
+    .sim-shell .ptitle {
+      font-size: 13px;
+    }
+    .sim-shell .psub {
+      display: inline;
+      margin-left: 6px;
+      font-size: 11.5px;
+    }
+    .sim-shell .pbody {
+      padding: 4px 10px 8px;
+    }
+    .sim-shell .sublabel {
+      padding-top: 4px;
+      font-size: 10.5px;
+    }
+    .sim-shell th {
+      padding: 4px 8px;
+      font-size: 10.5px;
+    }
+    .sim-shell td {
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+    .sim-shell .evlog li {
+      padding: 3px 6px;
+      font-size: 12px;
+    }
+    .sim-shell .audit {
+      gap: 4px;
+      padding: 6px 10px 8px;
+    }
+    .sim-shell .au {
+      padding: 4px 7px;
+      gap: 1px;
+      font-size: 11.5px;
+    }
+    .sim-shell .send-head {
+      padding: 6px 10px;
+    }
+    .sim-shell .logline {
+      padding: 6px 10px;
+    }
+    .sim-shell .logline code {
+      font-size: 12px;
+    }
+    .sim-shell .log {
+      padding: 0 8px 8px;
+    }
+  }
+  /* Step choreography. Each Next plays in order: what is read lights up, an arrow carries the
+     change to the panel it lands in, the changed cells flash in, then the send check runs and
+     points at the List 1 and List 2 rows it uses. Back and Reset show the end state without motion. */
+  .sim-stage {
+    position: relative;
+  }
+  .pbadge {
+    align-self: center;
+    flex: none;
+    padding: 1px 7px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .panel-head > .ptitle {
+    flex: 1;
+    min-width: 0;
+  }
+  .pb-chg {
+    color: var(--hl-mark);
+    background: var(--hl);
+  }
+  .pb-read {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .pb-send {
+    color: var(--muted);
+    background: var(--surface);
+    border-style: dashed;
+  }
+  .panel.act-read {
+    outline: 2px solid var(--accent);
+    outline-offset: -1px;
+  }
+  .panel.act-chg {
+    outline: 2px solid var(--hl-mark);
+    outline-offset: -1px;
+  }
+  .flow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 5;
+  }
+  .flow line {
+    stroke: var(--hl-mark);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+  .flow.flow-send line {
+    stroke: var(--accent);
+    stroke-width: 2;
+  }
+  .flow polygon {
+    fill: var(--hl-mark);
+  }
+  .flow.flow-send polygon {
+    fill: var(--accent);
+  }
+  .packet {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 6;
+    pointer-events: none;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--hl-mark);
+    color: var(--surface);
+    font-size: 11.5px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.45);
+    transform: translate(var(--x1), var(--y1)) translate(-50%, -50%);
+    opacity: 0;
+  }
+  .packet.packet-send {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .caption.cap-in {
+      animation: cap-in 0.45s ease-out both;
+    }
+    .dots li.on {
+      transform-origin: left center;
+      animation: dot-fill 0.5s ease-out both;
+    }
+    .panel.seq.act-read {
+      animation: ring-read 0.9s ease-out 0.05s both;
+    }
+    .panel.seq.act-chg {
+      animation: ring-chg 1s ease-out 0.6s both;
+    }
+    .panel.seq .pb-read {
+      animation: pop 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4) 0.1s both;
+    }
+    .panel.seq .pb-chg {
+      animation: pop 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4) 0.6s both;
+    }
+    .panel.seq tr.read > td,
+    .panel.seq li.read {
+      animation: read-in 0.5s ease-out 0.1s both;
+    }
+    .panel.seq table td.chg,
+    .panel.seq p.chg {
+      animation: flash-in 1.3s ease-out 0.6s both;
+    }
+    .panel.seq li.chg,
+    .panel.seq tr.row-new > td {
+      animation:
+        flash-in 1.3s ease-out 0.6s both,
+        slide-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s both;
+    }
+    .panel.ping {
+      animation: ping 0.7s ease-out both;
+    }
+    .panel.ping tr.read > td,
+    .panel.ping li.read {
+      animation: read-in 0.5s ease-out both;
+    }
+    .flow line {
+      animation: draw 0.55s ease-in-out both;
+    }
+    .flow polygon {
+      animation: fade-in 0.15s ease-out 0.45s both;
+    }
+    .flow.flow-out {
+      animation: fade-out 0.4s ease-in both;
+    }
+    .packet {
+      animation: fly 0.65s cubic-bezier(0.45, 0, 0.25, 1) both;
+    }
+    .log.anim .logline {
+      animation: pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+    }
+    .log.anim .logline + .logline {
+      animation-delay: 0.15s;
+    }
+    .log.anim .stamp {
+      animation: stamp 0.6s ease-out 0.2s both;
+    }
+    .pstep.lit {
+      animation: step-lit 0.45s ease-out both;
+    }
+  }
+  @keyframes cap-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+  @keyframes dot-fill {
+    from {
+      transform: scaleX(0);
+    }
+  }
+  @keyframes ring-read {
+    from {
+      outline-color: transparent;
+      box-shadow: 0 0 0 0 var(--accent);
+    }
+    50% {
+      box-shadow: 0 0 0 6px transparent;
+    }
+  }
+  @keyframes ring-chg {
+    from {
+      outline-color: transparent;
+      box-shadow: 0 0 0 0 var(--hl-flash);
+    }
+    45% {
+      box-shadow: 0 0 0 8px transparent;
+    }
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+  }
+  @keyframes read-in {
+    from {
+      background-color: transparent;
+      box-shadow: none;
+    }
+  }
+  @keyframes flash-in {
+    from {
+      background-color: transparent;
+    }
+    12% {
+      background-color: var(--hl-flash);
+    }
+    to {
+      background-color: var(--hl);
+    }
+  }
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+  }
+  @keyframes ping {
+    from {
+      box-shadow: 0 0 0 0 var(--accent);
+    }
+    to {
+      box-shadow: 0 0 0 9px transparent;
+    }
+  }
+  @keyframes draw {
+    from {
+      stroke-dashoffset: var(--len);
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes fly {
+    from {
+      opacity: 0;
+      transform: translate(var(--x0), var(--y0)) translate(-50%, -50%)
+        scale(0.7);
+    }
+    15% {
+      opacity: 1;
+      transform: translate(var(--x0), var(--y0)) translate(-50%, -50%);
+    }
+    85% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translate(var(--x1), var(--y1)) translate(-50%, -50%);
+    }
+  }
+  @keyframes stamp {
+    from {
+      transform: scale(1.6);
+      opacity: 0;
+    }
+  }
+  @keyframes step-lit {
+    from {
+      transform: translateX(-4px);
+      box-shadow:
+        inset 0 3px 0 var(--accent),
+        0 0 0 4px var(--accent-soft);
+    }
+  }
 </style>
 
 <div class="page">
   <header class="masthead" id="top">
     <p class="eyebrow">
-      Snowflake-mastered consent for Marketing Cloud Next · POC results, updated
-      2026-10-01
+      Externally mastered consent for Marketing Cloud Next (Snowflake in this
+      POC) · POC results, updated 2026-10-01
     </p>
     <h1>MC Next Consent Simulator</h1>
     <p class="purpose">
-      Snowflake can be the consent master for MC Next. Changes in either system
-      reach the other within about 15 minutes, and MC Next only emails people
-      Snowflake (or an MC Next unsubscribe) says are opted in.
+      An external system of record can be the consent master for MC Next. This
+      POC used Snowflake, but the same pattern works with any external system.
+      Changes in either system reach the other within about 15 minutes, and MC
+      Next only emails people Snowflake (or an MC Next unsubscribe) says are
+      opted in.
     </p>
     <p class="tally" aria-label="Scenario outcomes">
       <span class="oc oc-pass"
@@ -2352,12 +2861,8 @@
         ><span class="shape shape-partly" aria-hidden="true"></span>2
         findings</span
       >
-      <span class="oc oc-defect"
-        ><span class="shape shape-defect" aria-hidden="true"></span>1
-        defect</span
-      >
       <span class="oc oc-parked"
-        ><span class="shape shape-untested" aria-hidden="true"></span>1
+        ><span class="shape shape-untested" aria-hidden="true"></span>2
         parked</span
       >
     </p>
@@ -2400,22 +2905,6 @@
         </li>
       </ol>
       <div class="flags">
-        <div class="flagbox flag-defect">
-          <p class="flag-k">
-            <span class="shape shape-defect" aria-hidden="true"></span>Defect to
-            fix before production
-          </p>
-          <p>
-            If an opt-out reaches Snowflake late, dated earlier than the last
-            push to MC Next, the sync skips it and MC Next keeps emailing that
-            person.
-          </p>
-          <p class="flag-fix">
-            Fix (documented, not built): when Snowflake says opted out and MC
-            Next says opted in, always push the opt-out.
-            <a href="#s10">Scenario 10</a>
-          </p>
-        </div>
         <div class="flagbox flag-decision">
           <p class="flag-k">Decision 2026-10-01</p>
           <p>
@@ -2429,8 +2918,16 @@
     <p class="note">
       Also shown: consent mapped straight into Data 360 is ignored at send time
       (<a href="#s8">Scenario 8</a>), and someone with no consent record is
-      never emailed (<a href="#s7">Scenario 7</a>). One person with two
-      addresses was parked (<a href="#s6">Scenario 6</a>).
+      never emailed (<a href="#s7">Scenario 7</a>).
+    </p>
+    <p class="note">
+      Parked: one person with two addresses (<a href="#s6">Scenario 6</a>), and
+      a late opt-out dated before the last push, which the sync skips (<a
+        href="#s10"
+        >Scenario 10</a
+      >). That one is worth knowing about but isn't breaking. A fix is
+      documented: when Snowflake says opted out and MC Next says opted in,
+      always push the opt-out.
     </p>
     <p class="note">
       POC closed 2026-10-01. The sync and the return path are left running, but
@@ -2462,10 +2959,17 @@
       </div>
       <div class="fact">
         <p class="fact-k">PartyId</p>
-        <p class="fact-main">PartyId on consent rows is blank by design.</p>
+        <p class="fact-main">
+          PartyId is required on contact points, and blank on consent.
+        </p>
         <p>
-          PartyId on a contact point is what links a person (MAID) to an
-          address.
+          On Contact Point Email and Phone, PartyId links a person (GUID) to an
+          address. Without it, people can't be segmented or emailed: Snowflake
+          contacts only reached a send after PartyId was added (2026-09-24).
+        </p>
+        <p>
+          On consent rows, PartyId is always empty by design. You don't need to
+          set it there.
         </p>
         <p class="fact-src">
           <a
@@ -2480,7 +2984,8 @@
             rel="noopener"
             >KB 005389884</a
           >
-          · tested 2026-08-18: 0 of 24 consent rows had a PartyId
+          · tested 2026-08-18: 0 of 24 consent rows had a PartyId · tested
+          2026-09-25: contacts with PartyId unified and were segmented
         </p>
       </div>
       <div class="fact">
@@ -2522,8 +3027,9 @@
       >, <a href="#s8">Scenario 8</a>).
     </p>
     <p class="takeaway">
-      PartyId links people to addresses. Consent links addresses to permission.
-      MC Next never links people to permission directly.
+      PartyId links people to addresses, so set it on every contact point.
+      Consent links addresses to permission. MC Next never links people to
+      permission directly.
     </p>
   </section>
 
@@ -2535,205 +3041,216 @@
         what changed in Snowflake and MC Next, and what proves it.
       </p>
     </div>
-    <div class="picker" id="picker"></div>
-    <div class="nowbar" id="nowbar">
-      <div class="now" id="now" tabindex="-1">
-        <p class="now-line">
-          <span class="now-id" id="now-id"></span
-          ><span class="now-title" id="now-title">Scenario 1</span>
-        </p>
-        <p class="now-result">
-          <span id="now-chip"></span
-          ><span class="now-verdict" id="now-verdict"></span>
-        </p>
-      </div>
-      <div class="stepper" id="stepper">
-        <span class="counter" id="counter">Start · 4 steps</span>
-        <button type="button" class="bbtn" id="btn-back">Back</button>
-        <button type="button" class="bbtn primary" id="btn-next">Next</button>
-        <button type="button" class="bbtn" id="btn-reset">Reset</button>
-      </div>
-      <ol class="dots" id="dots" aria-hidden="true"></ol>
-    </div>
-
-    <div class="caption" id="caption" aria-live="polite">
-      <div class="cap-meta">
-        <span class="cap-step" id="cap-step">Starting state</span
-        ><span id="cap-tag"></span>
-      </div>
-      <div class="cap-body">
-        <p class="cap-text" id="cap-text">Loading the scenario.</p>
-        <p class="cap-flag" id="cap-flag" hidden></p>
-        <p class="cap-note" id="cap-note" hidden></p>
-        <p class="cap-ev" id="cap-ev" hidden></p>
-      </div>
-    </div>
-    <div class="callouts" id="callouts" hidden></div>
-
-    <div class="qcard" id="qcard" hidden>
-      <p class="qk">Open question</p>
-      <p class="q" id="q-text"></p>
-      <dl class="qdl">
-        <dt>What the docs say</dt>
-        <dd id="q-docs"></dd>
-        <dt id="q-extra-k" hidden></dt>
-        <dd id="q-extra" hidden></dd>
-      </dl>
-      <p class="qstatus" id="q-status">
-        <span class="shape shape-untested" aria-hidden="true"></span>Not yet
-        tested in 260715SDO – test planned.
-      </p>
-    </div>
-
-    <p class="key" id="legend">
-      <span class="lg"
-        ><span class="sw sw-chg" aria-hidden="true"></span>Changed in this
-        step</span
-      >
-      <span class="lg"
-        ><span class="sw sw-read" aria-hidden="true"></span>Read in this
-        step</span
-      >
-      <span class="lg"
-        ><span class="sw sw-ign" aria-hidden="true"></span>Ignored by the send
-        check</span
-      >
-      <span class="lg"
-        ><span class="blank">(blank)</span>PartyId is empty, by design</span
-      >
-      <span class="lg key-cast"
-        >Jo = MAID-1001 · Sam = MAID-1002 · Charlie = MAID-1003 · example rows
-        only</span
-      >
-    </p>
-
-    <div class="panels" id="panels">
-      <section class="panel panel-a" aria-labelledby="pa-h">
-        <header class="panel-head">
-          <span class="pletter" aria-hidden="true">A</span>
-          <h3 class="ptitle" id="pa-h">
-            Snowflake · consent master<span class="psub"
-              >Contacts and the consent event log</span
-            >
-          </h3>
-        </header>
-        <div class="pbody">
-          <div class="pblock">
-            <p class="sublabel">Contacts</p>
-            <div class="tscroll">
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">MAID</th>
-                    <th scope="col">Email</th>
-                  </tr>
-                </thead>
-                <tbody id="a-contacts"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="pblock">
-            <p class="sublabel">Consent event log</p>
-            <ol class="evlog" id="a-events"></ol>
-          </div>
-          <div class="pblock">
-            <p class="sublabel">
-              Current status <span>(latest event per address and channel)</span>
+    <div class="sim-shell" id="sim-shell">
+      <div class="sim-rail">
+        <div class="picker" id="picker"></div>
+        <div class="nowbar" id="nowbar">
+          <div class="now" id="now" tabindex="-1">
+            <p class="now-line">
+              <span class="now-id" id="now-id"></span
+              ><span class="now-title" id="now-title">Scenario 1</span>
             </p>
+            <p class="now-result">
+              <span id="now-chip"></span
+              ><span class="now-verdict" id="now-verdict"></span>
+            </p>
+          </div>
+          <div class="stepper" id="stepper">
+            <span class="counter" id="counter">Start · 4 steps</span>
+            <button type="button" class="bbtn" id="btn-back">Back</button>
+            <button type="button" class="bbtn primary" id="btn-next">
+              Next
+            </button>
+            <button type="button" class="bbtn" id="btn-reset">Reset</button>
+          </div>
+          <ol class="dots" id="dots" aria-hidden="true"></ol>
+        </div>
+
+        <div class="caption" id="caption" aria-live="polite">
+          <div class="cap-meta">
+            <span class="cap-step" id="cap-step">Starting state</span
+            ><span id="cap-tag"></span>
+          </div>
+          <div class="cap-body">
+            <p class="cap-text" id="cap-text">Loading the scenario.</p>
+            <p class="cap-flag" id="cap-flag" hidden></p>
+            <p class="cap-note" id="cap-note" hidden></p>
+            <p class="cap-ev" id="cap-ev" hidden></p>
+          </div>
+        </div>
+        <div class="callouts" id="callouts" hidden></div>
+
+        <div class="qcard" id="qcard" hidden>
+          <p class="qk">Open question</p>
+          <p class="q" id="q-text"></p>
+          <dl class="qdl">
+            <dt>What the docs say</dt>
+            <dd id="q-docs"></dd>
+            <dt id="q-extra-k" hidden></dt>
+            <dd id="q-extra" hidden></dd>
+          </dl>
+          <p class="qstatus" id="q-status">
+            <span class="shape shape-untested" aria-hidden="true"></span>Not yet
+            tested in 260715SDO – test planned.
+          </p>
+        </div>
+      </div>
+
+      <div class="sim-stage">
+        <p class="key" id="legend">
+          <span class="lg"
+            ><span class="sw sw-chg" aria-hidden="true"></span>Changed in this
+            step</span
+          >
+          <span class="lg"
+            ><span class="sw sw-read" aria-hidden="true"></span>Read in this
+            step</span
+          >
+          <span class="lg"
+            ><span class="sw sw-ign" aria-hidden="true"></span>Ignored by the
+            send check</span
+          >
+          <span class="lg"
+            ><span class="blank">(blank)</span>PartyId is empty, by design</span
+          >
+          <span class="lg key-cast"
+            >Jo = GUID-1001 · Sam = GUID-1002 · Charlie = GUID-1003 · example
+            rows only</span
+          >
+        </p>
+
+        <div class="panels" id="panels">
+          <section class="panel panel-a" aria-labelledby="pa-h">
+            <header class="panel-head">
+              <span class="pletter" aria-hidden="true">A</span>
+              <h3 class="ptitle" id="pa-h">
+                Snowflake · consent master<span class="psub"
+                  >Contacts and the consent event log</span
+                >
+              </h3>
+            </header>
+            <div class="pbody">
+              <div class="pblock">
+                <p class="sublabel">Contacts</p>
+                <div class="tscroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">GUID</th>
+                        <th scope="col">Email</th>
+                      </tr>
+                    </thead>
+                    <tbody id="a-contacts"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="pblock">
+                <p class="sublabel">Consent event log</p>
+                <ol class="evlog" id="a-events"></ol>
+              </div>
+              <div class="pblock">
+                <p class="sublabel">
+                  Current status
+                  <span>(latest event per address and channel)</span>
+                </p>
+                <div class="tscroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Address</th>
+                        <th scope="col">Channel</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="a-current"></tbody>
+                  </table>
+                </div>
+                <p class="a-stream" id="a-stream" hidden></p>
+                <p class="a-note" id="a-note" hidden></p>
+              </div>
+            </div>
+          </section>
+          <section class="panel panel-b" aria-labelledby="pb-h">
+            <header class="panel-head">
+              <span class="pletter" aria-hidden="true">B</span>
+              <h3 class="ptitle" id="pb-h">
+                MC Next List 1 · who is this person?<span class="psub"
+                  >Contact Point Email</span
+                >
+              </h3>
+            </header>
             <div class="tscroll">
               <table>
                 <thead>
                   <tr>
-                    <th scope="col">Address</th>
-                    <th scope="col">Channel</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">GUID</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">PartyId</th>
                   </tr>
                 </thead>
-                <tbody id="a-current"></tbody>
+                <tbody id="b-rows"></tbody>
               </table>
             </div>
-            <p class="a-stream" id="a-stream" hidden></p>
-            <p class="a-note" id="a-note" hidden></p>
-          </div>
+          </section>
+          <section class="panel panel-c" aria-labelledby="pc-h">
+            <header class="panel-head">
+              <span class="pletter" aria-hidden="true">C</span>
+              <h3 class="ptitle" id="pc-h">
+                MC Next List 2 · can we email this address?<span class="psub"
+                  >Communication Subscription Consent</span
+                >
+              </h3>
+            </header>
+            <div class="tscroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Consent key</th>
+                    <th scope="col">Subscription</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">PartyId</th>
+                  </tr>
+                </thead>
+                <tbody id="c-rows"></tbody>
+              </table>
+            </div>
+            <div class="audit">
+              <p class="sublabel">Audit trail (append-only)</p>
+              <ol class="audit-strip" id="c-audit"></ol>
+              <p class="audit-note" id="c-audit-note" hidden></p>
+            </div>
+          </section>
         </div>
-      </section>
-      <section class="panel panel-b" aria-labelledby="pb-h">
-        <header class="panel-head">
-          <span class="pletter" aria-hidden="true">B</span>
-          <h3 class="ptitle" id="pb-h">
-            MC Next List 1 · who is this person?<span class="psub"
-              >Contact Point Email</span
-            >
-          </h3>
-        </header>
-        <div class="tscroll">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">MAID</th>
-                <th scope="col">Email</th>
-                <th scope="col">PartyId</th>
-              </tr>
-            </thead>
-            <tbody id="b-rows"></tbody>
-          </table>
-        </div>
-      </section>
-      <section class="panel panel-c" aria-labelledby="pc-h">
-        <header class="panel-head">
-          <span class="pletter" aria-hidden="true">C</span>
-          <h3 class="ptitle" id="pc-h">
-            MC Next List 2 · can we email this address?<span class="psub"
-              >Communication Subscription Consent</span
-            >
-          </h3>
-        </header>
-        <div class="tscroll">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Consent key</th>
-                <th scope="col">Subscription</th>
-                <th scope="col">Status</th>
-                <th scope="col">PartyId</th>
-              </tr>
-            </thead>
-            <tbody id="c-rows"></tbody>
-          </table>
-        </div>
-        <div class="audit">
-          <p class="sublabel">Audit trail (append-only)</p>
-          <ol class="audit-strip" id="c-audit"></ol>
-          <p class="audit-note" id="c-audit-note" hidden></p>
-        </div>
-      </section>
-    </div>
 
-    <section class="send" id="send" aria-labelledby="send-h">
-      <header class="send-head">
-        <h3 class="ptitle" id="send-h">Send attempt</h3>
-        <span class="send-sub">Subscription: Marketing·Email</span
-        ><button type="button" class="sbtn" id="btn-replay" hidden>
-          Replay send
-        </button>
-      </header>
-      <ol class="pipe">
-        <li class="pstep" id="p1">
-          <span class="pn">1</span><span class="pl">Segment picks people</span
-          ><span class="ps">List 1</span><span class="pv" id="p1v">–</span>
-        </li>
-        <li class="pstep" id="p2">
-          <span class="pn">2</span><span class="pl">Look up their address</span
-          ><span class="ps">List 1</span><span class="pv" id="p2v">–</span>
-        </li>
-        <li class="pstep" id="p3">
-          <span class="pn">3</span
-          ><span class="pl">Check consent for Marketing·Email</span
-          ><span class="ps">List 2</span><span class="pv" id="p3v">–</span>
-        </li>
-      </ol>
-      <div class="log" id="send-log" aria-live="polite"></div>
-    </section>
+        <section class="send" id="send" aria-labelledby="send-h">
+          <header class="send-head">
+            <h3 class="ptitle" id="send-h">Send attempt</h3>
+            <span class="send-sub">Subscription: Marketing·Email</span
+            ><button type="button" class="sbtn" id="btn-replay" hidden>
+              Replay send
+            </button>
+          </header>
+          <ol class="pipe">
+            <li class="pstep" id="p1">
+              <span class="pn">1</span
+              ><span class="pl">Segment picks people</span
+              ><span class="ps">List 1</span><span class="pv" id="p1v">–</span>
+            </li>
+            <li class="pstep" id="p2">
+              <span class="pn">2</span
+              ><span class="pl">Look up their address</span
+              ><span class="ps">List 1</span><span class="pv" id="p2v">–</span>
+            </li>
+            <li class="pstep" id="p3">
+              <span class="pn">3</span
+              ><span class="pl">Check consent for Marketing·Email</span
+              ><span class="ps">List 2</span><span class="pv" id="p3v">–</span>
+            </li>
+          </ol>
+          <div class="log" id="send-log" aria-live="polite"></div>
+        </section>
+      </div>
+    </div>
 
     <details class="evidence" id="evidence">
       <summary>
@@ -2758,29 +3275,33 @@
     <div class="band-head">
       <h2 id="bg-h">Background and references</h2>
       <p>
-        How MAID and PartyId fit the consent model, a glossary, and every source
+        How GUID and PartyId fit the consent model, a glossary, and every source
         used.
       </p>
     </div>
-    <details class="more" id="maid">
-      <summary><h3 id="maid-h">Where MAID goes</h3></summary>
+    <details class="more" id="guid">
+      <summary><h3 id="guid-h">Where GUID goes</h3></summary>
       <div class="band-head">
         <p>
-          MAID maps to the Individual Id and to PartyId on Contact Point Email
+          GUID maps to the Individual Id and to PartyId on Contact Point Email
           and Contact Point Phone. It never maps to consent.
+        </p>
+        <p>
+          This POC used a GUID, but it could be any External Customer ID the
+          source system owns.
         </p>
       </div>
       <div class="maid-grid">
         <div class="maid-col">
-          <ul class="route" aria-label="Where MAID maps">
+          <ul class="route" aria-label="Where GUID maps">
             <li>
-              <span class="r-from">MAID</span
+              <span class="r-from">GUID</span
               ><span class="r-line" aria-hidden="true"></span
               ><span class="r-to">Individual Id</span
               ><span class="r-v maps">maps</span>
             </li>
             <li>
-              <span class="r-from">MAID</span
+              <span class="r-from">GUID</span
               ><span class="r-line" aria-hidden="true"></span
               ><span class="r-to"
                 >Contact Point Email · PartyId<small
@@ -2789,14 +3310,14 @@
               ><span class="r-v maps">maps</span>
             </li>
             <li>
-              <span class="r-from">MAID</span
+              <span class="r-from">GUID</span
               ><span class="r-line" aria-hidden="true"></span
               ><span class="r-to"
                 >Contact Point Phone · PartyId<small>source rows</small></span
               ><span class="r-v maps">maps</span>
             </li>
             <li>
-              <span class="r-from">MAID</span
+              <span class="r-from">GUID</span
               ><span class="r-line" aria-hidden="true"></span
               ><span class="r-to"
                 >Unified Individual<small
@@ -2806,7 +3327,7 @@
               ><span class="r-v obs">observed</span>
             </li>
             <li class="never">
-              <span class="r-from">MAID</span
+              <span class="r-from">GUID</span
               ><span class="r-line" aria-hidden="true"></span
               ><span class="r-to"
                 >Communication Subscription Consent · PartyId<small
@@ -2913,9 +3434,9 @@
                 ><span
                   >After Identity Resolution, the unified copy of List 1
                   (Unified Contact Point Email) has its PartyId set to the
-                  Unified Individual's own Id, a system-generated hash. The MAID
+                  Unified Individual's own Id, a system-generated hash. The GUID
                   stays on the source contact point rows, and the identity link
-                  maps the MAID to the unified person.</span
+                  maps the GUID to the unified person.</span
                 >
               </li>
               <li>
@@ -2925,7 +3446,7 @@
                   profiles only when the first name matches (fuzzy), the last
                   name matches exactly, and the normalised email matches. For
                   example, three source people with the same name and the same
-                  address became one Unified Individual. So two MAIDs sharing an
+                  address became one Unified Individual. So two GUIDs sharing an
                   address merge only if their names also match. Different-named
                   people who share an address stay separate people, and they
                   share one consent record (<a href="#s5">Scenario 5</a>).</span
@@ -3053,12 +3574,13 @@
 
       <dl class="gloss">
         <div>
-          <dt>MAID</dt>
+          <dt>GUID</dt>
           <dd>
-            The person ID this setup puts on source records. It maps to the
-            Individual Id and to PartyId on Contact Point Email and Contact
-            Point Phone. The identity link maps it to the Unified Individual. It
-            never goes on consent.
+            The person ID this setup puts on source records. This POC used a
+            GUID, but it could be any External Customer ID the source system
+            owns. It maps to the Individual Id and to PartyId on Contact Point
+            Email and Contact Point Phone. The identity link maps it to the
+            Unified Individual. It never goes on consent.
           </dd>
         </div>
         <div>
@@ -3098,7 +3620,20 @@
             The flow element that writes consent through MC Next's own path. Its
             four inputs are consent status, contact point, channel and
             communication subscription. The address must come through the flow's
-            contact-point merge field.
+            contact-point merge field. In this POC it runs inside the On-Demand
+            Flow (see Flows used).
+          </dd>
+        </div>
+        <div>
+          <dt>Flows used</dt>
+          <dd>
+            Two types. An <b>On-Demand Flow</b> is the write path: a scheduled
+            Apex job calls it over REST every 15 minutes, and it runs the Create
+            Consent action. <b>MC Next campaign flows</b> (segment-triggered,
+            run once on activation) did the test sends, and consent is checked
+            at send time. Salesforce also supports Create Consent in
+            event-triggered and Data Cloud-triggered flows. This POC didn't use
+            them.
           </dd>
         </div>
         <div>
@@ -3572,9 +4107,9 @@
     }
     function joOptedIn() {
       const st = blank();
-      contact(st, "MAID-1001", "jo@example.com");
+      contact(st, "GUID-1001", "jo@example.com");
       addEvent(st, "jo@example.com", "OPT_IN", "SNOWFLAKE");
-      person(st, "MAID-1001", "jo@example.com");
+      person(st, "GUID-1001", "jo@example.com");
       consent(st, "jo@example.com", "OPT_IN");
       audit(st, "jo@example.com", "OPT_IN", "External");
       return st;
@@ -3598,9 +4133,9 @@
           {
             refs: [],
             tag: "ILLUSTRATION",
-            text: "Snowflake creates Jo (<code>MAID-1001</code>, <code>jo@example.com</code>) and records OPT_IN for Marketing·Email. Its event log gets <code>OPT_IN · source SNOWFLAKE</code>.",
+            text: "Snowflake creates Jo (<code>GUID-1001</code>, <code>jo@example.com</code>) and records OPT_IN for Marketing·Email. Its event log gets <code>OPT_IN · source SNOWFLAKE</code>.",
             run: (st) => {
-              contact(st, "MAID-1001", "jo@example.com", true);
+              contact(st, "GUID-1001", "jo@example.com", true);
               addEvent(st, "jo@example.com", "OPT_IN", "SNOWFLAKE");
             }
           },
@@ -3608,10 +4143,10 @@
             refs: ["match", "kb80"],
             obs: "Tested 2026-09-25 · Snowflake contacts unified and segmented",
             tag: "TESTED",
-            text: "Contact data reaches Data 360, and Identity Resolution links the address to the person. List 1 gains <code>MAID-1001 | jo@example.com | PartyId MAID-1001</code>.",
+            text: "Contact data reaches Data 360, and Identity Resolution links the address to the person. List 1 gains <code>GUID-1001 | jo@example.com | PartyId GUID-1001</code>.",
             note: "Tested 2026-09-25: Snowflake contacts became Unified Individuals and could be segmented.",
             run: (st) => {
-              person(st, "MAID-1001", "jo@example.com", true);
+              person(st, "GUID-1001", "jo@example.com", true);
             }
           },
           {
@@ -3628,10 +4163,10 @@
             refs: ["concepts", "kb83"],
             obs: "R1 2026-09-30 · Kiera, Anthony, Henry SENT",
             tag: "TESTED",
-            text: "Send attempt: MAID-1001 → jo@example.com → OPT_IN → SENT.",
+            text: "Send attempt: GUID-1001 → jo@example.com → OPT_IN → SENT.",
             note: "Tested after a direct Create Consent call (2026-09-28). Tested again 2026-09-30: opt-ins pushed by the sync were SENT for three people.",
             run: (st) => {
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           }
         ],
@@ -3703,22 +4238,22 @@
             refs: ["concepts"],
             obs: "R2 2026-09-30 · Anthony NOT_SENT",
             tag: "TESTED",
-            text: "Send attempt: MAID-1001 → jo@example.com → OPT_OUT → NOT_SENT.",
+            text: "Send attempt: GUID-1001 → jo@example.com → OPT_OUT → NOT_SENT.",
             note: `Proven with an opt-out that came from the sync (<a href="#s3">Scenario 3</a>).`,
             run: (st) => {
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           },
           {
             refs: ["kb84"],
             obs: "S2a 2026-09-30 · in Snowflake ~90 s after the click (L25)",
             tag: "TESTED",
-            text: "Return path. Data 360 shares the consent and audit-trail objects with Snowflake through a zero-copy data share. A scheduled job there imports the events that came from MC Next. The Snowflake log gains <code>OPT_OUT · source MCN</code>, and its current status becomes OPT_OUT. To find the person, join the address back to List 1. The matching row is MAID-1001.",
+            text: "Return path. Data 360 shares the consent and audit-trail objects with Snowflake through a zero-copy data share. A scheduled job there imports the events that came from MC Next. The Snowflake log gains <code>OPT_OUT · source MCN</code>, and its current status becomes OPT_OUT. To find the person, join the address back to List 1. The matching row is GUID-1001.",
             note: "Tested 2026-09-30 with a real Unsubscribe: the event reached Snowflake about 90 seconds after the click.",
             run: (st) => {
               addEvent(st, "jo@example.com", "OPT_OUT", "MCN");
               mark(st, "read", "au:2");
-              mark(st, "read", "l1:MAID-1001");
+              mark(st, "read", "l1:GUID-1001");
             }
           },
           {
@@ -3818,9 +4353,9 @@
             refs: ["concepts"],
             obs: "T11 2026-09-28 · Patrick NOT_SENT",
             tag: "TESTED",
-            text: "Send attempt: MAID-1001 → jo@example.com → OPT_OUT → NOT_SENT.",
+            text: "Send attempt: GUID-1001 → jo@example.com → OPT_OUT → NOT_SENT.",
             run: (st) => {
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           }
         ],
@@ -3862,20 +4397,20 @@
         init: joOptedIn,
         start: {
           tag: "ILLUSTRATION",
-          text: "Jo (MAID-1001) is at jo@example.com, and that address is OPT_IN."
+          text: "Jo (GUID-1001) is at jo@example.com, and that address is OPT_IN."
         },
         steps: [
           {
             refs: [],
             obs: "S4a 2026-09-30 · Henry's Contact email changed, IR run",
             tag: "ILLUSTRATION",
-            text: "Jo changes her email to jo.new@example.com in the source system. The List 1 row for MAID-1001 now shows jo.new@example.com.",
+            text: "Jo changes her email to jo.new@example.com in the source system. The List 1 row for GUID-1001 now shows jo.new@example.com.",
             note: "Whether the old address stays in List 1 depends on how the source is mapped.",
             run: (st) => {
               st.contacts[0].email = "jo.new@example.com";
-              mark(st, "chg", "ac:MAID-1001:email");
+              mark(st, "chg", "ac:GUID-1001:email");
               st.l1[0].email = "jo.new@example.com";
-              mark(st, "chg", "l1:MAID-1001:email");
+              mark(st, "chg", "l1:GUID-1001:email");
             }
           },
           {
@@ -3893,11 +4428,11 @@
             refs: ["consider"],
             obs: "R3 2026-09-30 · Henry NOT_SENT at the new address",
             tag: "TESTED",
-            text: "Send attempt: MAID-1001 → jo.new@example.com → no consent record → NOT_SENT.",
+            text: "Send attempt: GUID-1001 → jo.new@example.com → no consent record → NOT_SENT.",
             note: `Same behaviour as <a href="#s7">Scenario 7</a>.`,
             run: (st) => {
               st.ghosts.push("jo.new@example.com");
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           },
           {
@@ -3910,7 +4445,7 @@
               addEvent(st, "jo.new@example.com", "OPT_IN", "SNOWFLAKE");
               consent(st, "jo.new@example.com", "OPT_IN");
               audit(st, "jo.new@example.com", "OPT_IN", "External");
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           }
         ],
@@ -3946,18 +4481,18 @@
         title: "Two people share one email, one opts out",
         init: () => {
           const st = blank();
-          contact(st, "MAID-1001", "family@example.com");
-          contact(st, "MAID-1002", "family@example.com");
+          contact(st, "GUID-1001", "family@example.com");
+          contact(st, "GUID-1002", "family@example.com");
           addEvent(st, "family@example.com", "OPT_IN", "SNOWFLAKE");
-          person(st, "MAID-1001", "family@example.com");
-          person(st, "MAID-1002", "family@example.com");
+          person(st, "GUID-1001", "family@example.com");
+          person(st, "GUID-1002", "family@example.com");
           consent(st, "family@example.com", "OPT_IN");
           audit(st, "family@example.com", "OPT_IN", "External");
           return st;
         },
         start: {
           tag: "ILLUSTRATION",
-          text: "Jo (MAID-1001) and Sam (MAID-1002) both use family@example.com. List 1 has two rows. List 2 has one."
+          text: "Jo (GUID-1001) and Sam (GUID-1002) both use family@example.com. List 1 has two rows. List 2 has one."
         },
         steps: [
           {
@@ -3966,8 +4501,8 @@
             tag: "TESTED",
             text: "There is only one consent row for the shared address, <code>family@example.com#CSCT</code>. Both List 1 rows lead to it.",
             run: (st) => {
-              mark(st, "read", "l1:MAID-1001");
-              mark(st, "read", "l1:MAID-1002");
+              mark(st, "read", "l1:GUID-1001");
+              mark(st, "read", "l1:GUID-1002");
               mark(st, "read", "l2:mcn:family@example.com");
             }
           },
@@ -3988,19 +4523,19 @@
             tag: "TESTED",
             text: "Send to Jo → NOT_SENT. Send to Sam → NOT_SENT. Both are suppressed.",
             run: (st) => {
-              send(st, ["MAID-1001", "MAID-1002"]);
+              send(st, ["GUID-1001", "GUID-1002"]);
             }
           },
           {
             refs: ["kb84"],
             tag: "DOCUMENTED",
-            text: "Return path: joining the address back to List 1 returns two people, MAID-1001 and MAID-1002. Snowflake has to decide how to record that.",
+            text: "Return path: joining the address back to List 1 returns two people, GUID-1001 and GUID-1002. Snowflake has to decide how to record that.",
             run: (st) => {
-              mark(st, "read", "l1:MAID-1001");
-              mark(st, "read", "l1:MAID-1002");
+              mark(st, "read", "l1:GUID-1001");
+              mark(st, "read", "l1:GUID-1002");
               st.extNote = [
                 "Return path",
-                "family@example.com matches two people in List 1 (MAID-1001 and MAID-1002). How to record this is not decided."
+                "family@example.com matches two people in List 1 (GUID-1001 and GUID-1002). How to record this is not decided."
               ];
             }
           }
@@ -4025,7 +4560,7 @@
             text: "Test #7 (2026-08-18): a second member's consent write to an address already used by another member replaced that record (same key, newer updated time)."
           }
         ],
-        xref: `Whether two people sharing an address are merged depends on the Identity Resolution match rules (see <a href="#maid">Where MAID goes</a>).`,
+        xref: `Whether two people sharing an address are merged depends on the Identity Resolution match rules (see <a href="#guid">Where GUID goes</a>).`,
         verdict:
           "Tested in 260715SDO – two people on one address get one email each, and one opt-out stops both. Matches KB 005389883."
       },
@@ -4065,23 +4600,23 @@
         title: "Contact with no consent record",
         init: () => {
           const st = blank();
-          contact(st, "MAID-1003", "charlie@example.com");
-          person(st, "MAID-1003", "charlie@example.com");
+          contact(st, "GUID-1003", "charlie@example.com");
+          person(st, "GUID-1003", "charlie@example.com");
           return st;
         },
         start: {
           tag: "ILLUSTRATION",
-          text: "Charlie (MAID-1003) is in List 1 at charlie@example.com. List 2 has no row for that address."
+          text: "Charlie (GUID-1003) is in List 1 at charlie@example.com. List 2 has no row for that address."
         },
         steps: [
           {
             refs: ["consider", "concepts"],
             obs: "2026-09-28 and every Phase 4 round (Lily)",
             tag: "TESTED",
-            text: "Send attempt: MAID-1003 → charlie@example.com → no consent record → NOT_SENT.",
+            text: "Send attempt: GUID-1003 → charlie@example.com → no consent record → NOT_SENT.",
             run: (st) => {
               st.ghosts.push("charlie@example.com");
-              send(st, ["MAID-1003"]);
+              send(st, ["GUID-1003"]);
             }
           },
           {
@@ -4091,7 +4626,7 @@
             text: `An explicit opt-out gives the same reason text (<a href="#s3">Scenario 3</a>). The send log alone can't tell a missing record from an opt-out, so check the consent store.`,
             run: (st) => {
               st.ghosts.push("charlie@example.com");
-              send(st, ["MAID-1003"], { compare: true });
+              send(st, ["GUID-1003"], { compare: true });
             }
           }
         ],
@@ -4126,9 +4661,9 @@
         title: "External consent mapped straight into the consent data model",
         init: () => {
           const st = blank();
-          contact(st, "MAID-1001", "jo@example.com");
+          contact(st, "GUID-1001", "jo@example.com");
           addEvent(st, "jo@example.com", "OPT_IN", "SNOWFLAKE");
-          person(st, "MAID-1001", "jo@example.com");
+          person(st, "GUID-1001", "jo@example.com");
           st.auditNote =
             "This page doesn't show whether a mapped row adds an audit entry. Testing didn't cover that.";
           return st;
@@ -4151,9 +4686,9 @@
             refs: ["kb63", "kb88"],
             obs: "2026-09-25 · all 4 NOT_SENT (L1)",
             tag: "TESTED",
-            text: "Send attempt: MAID-1001 → jo@example.com → NOT_SENT. The send check ignored the mapped row.",
+            text: "Send attempt: GUID-1001 → jo@example.com → NOT_SENT. The send check ignored the mapped row.",
             run: (st) => {
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           },
           {
@@ -4164,7 +4699,7 @@
             run: (st) => {
               consent(st, "jo@example.com", "OPT_IN");
               audit(st, "jo@example.com", "OPT_IN", "External");
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           }
         ],
@@ -4229,9 +4764,9 @@
             refs: ["concepts"],
             obs: "R2 2026-09-30 · Anthony NOT_SENT",
             tag: "TESTED",
-            text: "Send attempt: MAID-1001 → jo@example.com → OPT_OUT → NOT_SENT.",
+            text: "Send attempt: GUID-1001 → jo@example.com → OPT_OUT → NOT_SENT.",
             run: (st) => {
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           },
           {
@@ -4249,10 +4784,10 @@
             refs: ["concepts"],
             obs: "R3 2026-09-30 · Anthony SENT. R2 · Alex SENT (S9a)",
             tag: "TESTED",
-            text: "Send attempt: MAID-1001 → jo@example.com → OPT_IN → SENT. Jo is emailed again.",
+            text: "Send attempt: GUID-1001 → jo@example.com → OPT_IN → SENT. Jo is emailed again.",
             note: "S9a showed the same flip after Snowflake's own opt-out (Alex). S9b showed it after a real Unsubscribe click (Anthony).",
             run: (st) => {
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           }
         ],
@@ -4290,15 +4825,15 @@
       {
         id: "s10",
         n: 10,
-        group: "defect",
+        group: "parked",
         plan: "S10a, S10b",
         short: "Late opt-out dated before the last push",
         title: "A late opt-out dated before the last push",
         init: () => {
           const st = blank();
-          contact(st, "MAID-1001", "jo@example.com");
+          contact(st, "GUID-1001", "jo@example.com");
           addEvent(st, "jo@example.com", "OPT_IN", "SNOWFLAKE", "dated 20:31");
-          person(st, "MAID-1001", "jo@example.com");
+          person(st, "GUID-1001", "jo@example.com");
           consent(st, "jo@example.com", "OPT_IN");
           audit(st, "jo@example.com", "OPT_IN", "External");
           st.auditNote =
@@ -4344,10 +4879,9 @@
             refs: ["concepts"],
             obs: "R2 2026-09-30 · Harrison SENT",
             tag: "TESTED",
-            text: "Send attempt: MAID-1001 → jo@example.com → OPT_IN → SENT. MC Next emails someone Snowflake says is opted out.",
-            flag: "Defect: the opt-out never reaches MC Next.",
+            text: "Send attempt: GUID-1001 → jo@example.com → OPT_IN → SENT. MC Next emails someone Snowflake says is opted out.",
             run: (st) => {
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           },
           {
@@ -4358,7 +4892,7 @@
             run: (st) => {
               consent(st, "jo@example.com", "OPT_OUT");
               audit(st, "jo@example.com", "OPT_OUT", "External");
-              send(st, ["MAID-1001"], { design: true });
+              send(st, ["GUID-1001"], { design: true });
             }
           }
         ],
@@ -4385,12 +4919,12 @@
             "An opt-out was pushed to MC Next, then an older opt-in was loaded into Snowflake. Across three sync runs, Snowflake's current view stayed OPT_OUT, the sync pushed nothing, and MC Next kept OPT_OUT with one audit row."
           ],
           [
-            "Defect 2026-09-30",
+            "Found 2026-09-30",
             "An opt-in was pushed at 20:38 UTC. An opt-out dated 20:32, after the opt-in event but before the push, was loaded late. Two sync runs skipped it because MC Next's capture time is the push time, and the next send went to someone the master had opted out. Fix (documented, not built – decision 2026-10-01): always push an OPT_OUT when MC Next says OPT_IN."
           ]
         ],
         verdict:
-          "Tested in 260715SDO – a late older opt-in is ignored, but a late opt-out dated inside the push lag slips through. Known defect: the production sync needs an opt-out-always-wins rule (not built in this POC)."
+          "Tested in 260715SDO – a late older opt-in is ignored, but a late opt-out dated inside the push lag slips through. Parked: not breaking, but a production sync should add an opt-out-always-wins rule (documented, not built in this POC)."
       },
       {
         id: "s11",
@@ -4401,8 +4935,8 @@
         title: "Email case differs (Jo@Example.com vs jo@example.com)",
         init: () => {
           const st = blank();
-          contact(st, "MAID-1001", "Jo@Example.com");
-          person(st, "MAID-1001", "Jo@Example.com");
+          contact(st, "GUID-1001", "Jo@Example.com");
+          person(st, "GUID-1001", "Jo@Example.com");
           return st;
         },
         start: {
@@ -4425,10 +4959,10 @@
             refs: ["match"],
             obs: "S11a R1 2026-09-30 · Kiera SENT (L22)",
             tag: "TESTED",
-            text: "Send attempt: MAID-1001 → Jo@Example.com → matches jo@example.com#CSCT → OPT_IN → SENT. Letter case doesn't matter at send time.",
+            text: "Send attempt: GUID-1001 → Jo@Example.com → matches jo@example.com#CSCT → OPT_IN → SENT. Letter case doesn't matter at send time.",
             note: "No public doc covers letter case at send time, so this POC result is the only evidence.",
             run: (st) => {
-              send(st, ["MAID-1001"]);
+              send(st, ["GUID-1001"]);
             }
           }
         ],
@@ -4661,8 +5195,8 @@
       timers.forEach((t) => clearTimeout(t));
       timers = [];
     }
-    function renderSend(animate) {
-      stopTimers();
+    function renderSend(animate, delay) {
+      const d0 = delay || 0;
       const boxes = [$("p1"), $("p2"), $("p3")];
       const vals = [$("p1v"), $("p2v"), $("p3v")];
       const log = $("send-log");
@@ -4688,10 +5222,10 @@
       if (st.send.compare) {
         lines =
           logLine(
-            "Scenario 7 · MAID-1003 → charlie@example.com → no consent record",
+            "Scenario 7 · GUID-1003 → charlie@example.com → no consent record",
             false
           ) +
-          logLine("Scenario 3 · MAID-1001 → jo@example.com → OPT_OUT", false) +
+          logLine("Scenario 3 · GUID-1001 → jo@example.com → OPT_OUT", false) +
           '<p class="log-note">Same reason text on both lines.</p>';
       } else {
         lines = res
@@ -4699,26 +5233,42 @@
           .join("");
       }
       replay.hidden = false;
-      const light = (i) => {
+      const light = (i, anim) => {
         boxes[i].classList.add("lit");
         vals[i].innerHTML = pv[i];
+        if (!anim) return;
+        /* Steps 1 and 2 read List 1, step 3 reads List 2 */
+        const p = panelEl(i < 2 ? "b" : "c");
+        p.classList.remove("ping");
+        void p.offsetWidth;
+        p.classList.add("ping");
+        if (i !== 1)
+          fly(
+            boxes[i],
+            p.querySelector("tr.read") || p.querySelector(".panel-head"),
+            i === 0 ? "who?" : "consent?",
+            0,
+            "send"
+          );
       };
-      const show = () => {
+      const show = (anim) => {
+        log.classList.toggle("anim", !!anim);
         log.innerHTML = lines;
       };
       if (!animate || reduced) {
-        [0, 1, 2].forEach(light);
-        show();
+        [0, 1, 2].forEach((i) => light(i, false));
+        show(false);
         return;
       }
       vals.forEach((v) => {
         v.textContent = "…";
       });
+      log.classList.remove("anim");
       log.innerHTML = '<p class="idle">Checking…</p>';
       [0, 1, 2].forEach((i) => {
-        timers.push(setTimeout(() => light(i), 120 + i * 480));
+        timers.push(setTimeout(() => light(i, true), d0 + 120 + i * 650));
       });
-      timers.push(setTimeout(show, 120 + 3 * 480));
+      timers.push(setTimeout(() => show(true), d0 + 120 + 3 * 650));
     }
 
     function renderCaption() {
@@ -4824,8 +5374,144 @@
     const setDis = (b, d) => {
       b.setAttribute("aria-disabled", d ? "true" : "false");
     };
+    /* Which panel a mark belongs to: A = Snowflake, B = List 1, C = List 2 and its audit trail */
+    const PANEL_OF = (k) =>
+      /^l1:/.test(k) ? "b" : /^(l2:|au:|gh:)/.test(k) ? "c" : "a";
+    const PANEL_NAME = { a: "Snowflake", b: "List 1", c: "List 2" };
+    const panelEl = (p) => document.querySelector(".panel-" + p);
+    function activity() {
+      const out = { reads: new Set(), chgs: new Set(), sendReads: new Set() };
+      st.m.chg.forEach((k) => out.chgs.add(PANEL_OF(k)));
+      st.m.read.forEach((k) => {
+        const p = PANEL_OF(k);
+        /* With a send in the step, List 1 and List 2 reads are the send check's own */
+        if (st.send && p !== "a") out.sendReads.add(p);
+        else out.reads.add(p);
+      });
+      return out;
+    }
+    function markPanels(act, animate) {
+      ["a", "b", "c"].forEach((p) => {
+        const el = panelEl(p);
+        el.classList.remove("act-read", "act-chg", "seq", "ping");
+        const head = el.querySelector(".panel-head");
+        head.querySelectorAll(".pbadge").forEach((b) => b.remove());
+        el.querySelectorAll("tbody tr").forEach((tr) => {
+          const tds = Array.from(tr.children);
+          if (tds.length && tds.every((t) => t.classList.contains("chg")))
+            tr.classList.add("row-new");
+        });
+        const tags = [];
+        if (act.chgs.has(p)) {
+          el.classList.add("act-chg");
+          tags.push('<span class="pbadge pb-chg">Changed</span>');
+        } else if (act.reads.has(p)) {
+          el.classList.add("act-read");
+        }
+        if (act.reads.has(p))
+          tags.push('<span class="pbadge pb-read">Read</span>');
+        if (act.sendReads.has(p))
+          tags.push('<span class="pbadge pb-send">Checked by send</span>');
+        head.insertAdjacentHTML("beforeend", tags.join(""));
+        if (animate) {
+          void el.offsetWidth;
+          el.classList.add("seq");
+        }
+      });
+    }
+    function clearFlows() {
+      document
+        .querySelectorAll(".sim-stage .flow, .sim-stage .packet")
+        .forEach((e) => e.remove());
+    }
+    /* Draws an arrow from one element to another inside the stage, with a labelled packet riding it */
+    function fly(fromEl, toEl, label, delay, kind) {
+      const stage = document.querySelector(".sim-stage");
+      if (!stage || !fromEl || !toEl || reduced) return;
+      const go = () => {
+        const s = stage.getBoundingClientRect();
+        const a = fromEl.getBoundingClientRect();
+        const b = toEl.getBoundingClientRect();
+        if (!a.width || !b.width) return;
+        const pt = (r) => [
+          r.left + r.width / 2 - s.left + stage.scrollLeft,
+          r.top + r.height / 2 - s.top + stage.scrollTop
+        ];
+        const [x0, y0] = pt(a);
+        const [x1, y1] = pt(b);
+        const len = Math.hypot(x1 - x0, y1 - y0);
+        if (len < 8) return;
+        const ux = (x1 - x0) / len;
+        const uy = (y1 - y0) / len;
+        const hx = x1 - ux * 4;
+        const hy = y1 - uy * 4;
+        const head = [
+          [hx, hy],
+          [hx - ux * 11 - uy * 6, hy - uy * 11 + ux * 6],
+          [hx - ux * 11 + uy * 6, hy - uy * 11 - ux * 6]
+        ]
+          .map((q) => q.map((v) => v.toFixed(1)).join(","))
+          .join(" ");
+        const ns = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(ns, "svg");
+        svg.setAttribute("class", "flow" + (kind ? " flow-" + kind : ""));
+        svg.setAttribute("aria-hidden", "true");
+        svg.setAttribute("width", stage.scrollWidth);
+        svg.setAttribute("height", stage.scrollHeight);
+        svg.innerHTML =
+          `<line x1="${x0}" y1="${y0}" x2="${hx - ux * 6}" y2="${hy - uy * 6}" stroke-dasharray="${len}" style="--len:${len}px"></line>` +
+          `<polygon points="${head}"></polygon>`;
+        stage.appendChild(svg);
+        const pk = document.createElement("span");
+        pk.className = "packet" + (kind ? " packet-" + kind : "");
+        pk.setAttribute("aria-hidden", "true");
+        pk.textContent = label;
+        pk.style.setProperty("--x0", x0 + "px");
+        pk.style.setProperty("--y0", y0 + "px");
+        pk.style.setProperty("--x1", x1 + "px");
+        pk.style.setProperty("--y1", y1 + "px");
+        stage.appendChild(pk);
+        timers.push(
+          setTimeout(() => {
+            svg.classList.add("flow-out");
+            pk.remove();
+          }, 1100)
+        );
+        timers.push(setTimeout(() => svg.remove(), 1600));
+      };
+      if (delay) timers.push(setTimeout(go, delay));
+      else go();
+    }
+    /* Marks the panels, and when animating plays the step; returns how long the send check should wait (ms) */
+    function choreograph(animate) {
+      clearFlows();
+      const act = activity();
+      markPanels(act, animate);
+      const cap = $("caption");
+      cap.classList.remove("cap-in");
+      if (!animate || reduced) return 0;
+      void cap.offsetWidth;
+      cap.classList.add("cap-in");
+      let flew = false;
+      act.reads.forEach((src) => {
+        act.chgs.forEach((dst) => {
+          if (src === dst) return;
+          fly(
+            panelEl(src).querySelector(".panel-head"),
+            panelEl(dst).querySelector(".panel-head"),
+            PANEL_NAME[src] + " → " + PANEL_NAME[dst],
+            0
+          );
+          flew = true;
+        });
+      });
+      return act.chgs.size ? (flew ? 1000 : 800) : 150;
+    }
+
     function render(animate) {
       const sim = !cur.card;
+      let sendDelay = 0;
+      stopTimers();
       $("now-id").textContent = `Scenario ${cur.n} · plan ${cur.plan}`;
       $("now-title").textContent = cur.title;
       $("now-chip").innerHTML = schip(cur.group);
@@ -4859,12 +5545,14 @@
         renderA();
         renderB();
         renderC();
+        sendDelay = choreograph(animate);
       } else {
+        clearFlows();
         st = null;
         $("callouts").hidden = true;
         renderCard();
       }
-      renderSend(animate);
+      renderSend(animate, sendDelay);
       renderEvidence();
     }
 
@@ -4887,7 +5575,7 @@
       }
       render(false);
       if (o.scroll) {
-        const el = $("simulator");
+        const el = $("sim-shell");
         try {
           if (el && typeof el.scrollIntoView === "function")
             el.scrollIntoView({
@@ -4918,7 +5606,7 @@
             items
               .map(
                 (s) =>
-                  `<button type="button" class="pick" id="pick-${s.id}" data-sc="${s.id}" aria-pressed="false"><span class="pick-n">${s.n}</span><span class="pick-t">${esc(s.short)}</span><span class="pick-plan">${esc(s.plan)}</span></button>`
+                  `<button type="button" class="pick" id="pick-${s.id}" data-sc="${s.id}" aria-pressed="false" title="${esc(s.short)}"><span class="pick-n">${s.n}</span><span class="pick-t">${esc(s.short)}</span><span class="pick-plan">${esc(s.plan)}</span></button>`
               )
               .join("") +
             "</div></div>"
@@ -4953,7 +5641,11 @@
       render(false);
     });
     $("btn-replay").addEventListener("click", () => {
-      if (st && st.send) renderSend(true);
+      if (st && st.send) {
+        stopTimers();
+        clearFlows();
+        renderSend(true);
+      }
     });
     document.addEventListener("click", (e) => {
       const a =

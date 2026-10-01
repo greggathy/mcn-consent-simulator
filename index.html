@@ -263,6 +263,45 @@
     border-top: 6px solid var(--ink);
     padding-top: 14px;
   }
+  /* How-to video: under the intro on narrow screens, beside it on wide ones */
+  .mast-video {
+    margin: 0;
+    display: grid;
+    gap: 6px;
+    max-width: 560px;
+  }
+  .mast-video video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--sunk);
+    border: 1px solid var(--rule-strong);
+    border-radius: 6px;
+  }
+  .mast-video figcaption {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+  }
+  @media (min-width: 980px) {
+    .masthead {
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+      /* The last text row soaks up the video's extra height, so the intro stays tight */
+      grid-template-rows: auto auto auto 1fr auto;
+      column-gap: 40px;
+    }
+    .masthead > .tally {
+      align-self: start;
+    }
+    .masthead > .eyebrow,
+    .masthead > .toc {
+      grid-column: 1 / -1;
+    }
+    .masthead > .mast-video {
+      grid-column: 2;
+      grid-row: 2 / span 3;
+      align-self: start;
+    }
+  }
   .mast-top {
     display: flex;
     flex-wrap: wrap;
@@ -2866,6 +2905,20 @@
         parked</span
       >
     </p>
+    <figure class="mast-video">
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        poster="media/mcn-consent-simulator-howto-poster.jpg"
+        aria-label="One-minute tour of the simulator: each section, then Scenario 3 step by step"
+      >
+        <source src="media/mcn-consent-simulator-howto.mp4" type="video/mp4" />
+      </video>
+      <figcaption>
+        One-minute tour: the sections, then one scenario step by step.
+      </figcaption>
+    </figure>
     <nav class="toc" aria-label="On this page">
       <a href="#proved">What we proved</a>
       <a href="#simulator">Simulator</a>
